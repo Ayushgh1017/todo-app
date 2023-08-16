@@ -64,6 +64,9 @@ export class TodoListComponent implements OnInit {
   }
 
   removeFromDone(todo: TodoItem) { 
-    this.done = this.done.filter(item => item !== todo);
+    const index = this.done.indexOf(todo);
+    if (index !== -1) {
+        this.done.splice(index, 1);
+    }
   }
 }
