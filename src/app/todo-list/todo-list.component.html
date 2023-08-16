@@ -1,0 +1,46 @@
+<div class="todo-container">
+  <table>
+    <tr>
+      <td>
+        <div>
+          <input [(ngModel)]="newTodo" placeholder="Enter your new Todo Task" />
+          <button (click)="addTodo()">Add Todo</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+  
+  <table>
+    <tr>
+      <td>
+        <h2>Todos</h2>
+        <ul>
+          <li *ngFor="let todo of todos">
+            {{ todo.message }} <span class="timestamp">{{ todo.timestamp | date: 'medium' }}</span>
+            <button (click)="moveInProgress(todo)">Start</button>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <h2>In Progress</h2>
+        <ul>
+          <li *ngFor="let todo of inProgress">
+            {{ todo.message }} <button (click)="markDone(todo)">Done</button>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <h2>Done</h2>
+       <ul class="todo-list">
+       <li *ngFor="let todo of done">
+       {{ todo.message }} <button (click)="removeFromDone(todo)">Remove</button>
+       <div class="completed-date">
+        Task completed on {{ todo.timestamp | date: 'medium' }}
+      </div>
+       </li>
+      </ul>
+      </td>
+    </tr>
+  </table>
+</div>
+  
