@@ -2,15 +2,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
-
+import { CustomDatePipe } from './todo-list/formatDate.pipe';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { DatePipe } from '@angular/common';
+import { SignupComponent } from './signup/signup.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent
+    TodoListComponent,
+    CustomDatePipe,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

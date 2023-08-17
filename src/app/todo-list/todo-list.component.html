@@ -1,46 +1,86 @@
 <div class="todo-container">
-  <table>
-    <tr>
-      <td>
-        <div>
-          <input [(ngModel)]="newTodo" placeholder="Enter your new Todo Task" />
-          <button (click)="addTodo()">Add Todo</button>
-        </div>
-      </td>
-    </tr>
-  </table>
-  
-  <table>
-    <tr>
-      <td>
-        <h2>Todos</h2>
-        <ul>
-          <li *ngFor="let todo of todos">
-            {{ todo.message }} <span class="timestamp">{{ todo.timestamp | date: 'medium' }}</span>
-            <button (click)="moveInProgress(todo)">Start</button>
-          </li>
-        </ul>
-      </td>
-      <td>
-        <h2>In Progress</h2>
-        <ul>
-          <li *ngFor="let todo of inProgress">
-            {{ todo.message }} <button (click)="markDone(todo)">Done</button>
-          </li>
-        </ul>
-      </td>
-      <td>
-        <h2>Done</h2>
-       <ul class="todo-list">
-       <li *ngFor="let todo of done">
-       {{ todo.message }} <button (click)="removeFromDone(todo)">Remove</button>
-       <div class="completed-date">
-        Task completed on {{ todo.timestamp | date: 'medium' }}
+  <div class="form-container">
+    <form #todoForm="ngForm" (ngSubmit)="addTodo()">
+      <div class="input-container">
+        <input [(ngModel)]="newTodo" name="newTodo" placeholder="Enter your new Todo Task" maxlength="40" minlength="4" required />
+        <div *ngIf="todoForm.controls['newTodo'].hasError('maxlength')">Character limit exceeded.</div>
+        <button type="submit" [disabled]="!todoForm.valid">Add Todo</button>
       </div>
-       </li>
-      </ul>
-      </td>
-    </tr>
-  </table>
+      <div class="deadline-container">
+        <div class="deadline-labels">
+          <label for="deadlineDate">Deadline Date:</label>
+          <label for="deadlineTime">Deadline Time:</label>
+        </div>
+        <div class="deadline-inputs">
+          <input type="date" id="deadlineDate" [(ngModel)]="deadlineDate" name="deadlineDate" required [min]="minDateISOString()" />
+          <input type="time" id="deadlineTime" [(ngModel)]="deadlineTime.hour" name="hour" required />
+        </div>
+      </div>
+      <div class="radio">
+        <p class="priority">Priority:-</p>
+
+        <input [(ngModel)]="selectedPriority" type="radio" id="high" name="priority" value="high"  />
+        <label for="high">high</label>
+    
+        <input [(ngModel)]="selectedPriority" type="radio" id="medium" name="priority" value="medium" />
+        <label for="medium">medium</label>
+
+        <input [(ngModel)]="selectedPriority" type="radio" id="low" name="priority" value="low" />
+        <label for="low">low</label>
+    </div>
+    </form>
+  </div>
+
+
+<div class="todo-lists">
+  <div class="todo-list">
+    <h2>Todos</h2>
+    <ul>
+      <li *ngFor="let todo of todos" class="todo-item" [ngClass]="getPriorityClass(todo.priority)">
+        <div class="todo-content">
+          <span class="deadline">{{ todo.deadline | formatDate }}</span>
+          {{ todo.message }}
+        </div>
+        <div class="todo-priority" *ngIf="todo.priority">
+          Priority: {{ todo.priority }}
+        </div>
+        <div class="todo-actions">
+          <button (click)="moveInProgress(todo)" class="start-button">Start</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="todo-list">
+    <h2>In Progress</h2>
+    <ul>
+      <li *ngFor="let todo of inProgress" class="todo-item">
+        <div class="todo-content">
+          {{ todo.message }}
+        </div>
+        <div class="todo-actions">
+          <button (click)="markDone(todo)" class="done-button">Done</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="todo-list">
+    <h2>Done</h2>
+    <ul>
+      <li *ngFor="let todo of done" class="todo-item">
+        <div class="todo-content">
+          {{ todo.message }}
+          <div class="completed-date deadline">
+            Task completed on {{ todo.deadline | formatDate }}
+          </div>
+        </div>
+        <div class="todo-actions">
+          <button (click)="removeFromDone(todo)" class="remove-button">Remove</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
-  
+
+</div>
