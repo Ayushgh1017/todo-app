@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 interface TodoItem {
   message: string;
-  deadline: Date;
+  deadlineD: string;
+  deadlineT: { hour: number, minute: number },
   priority: 'high' | 'medium' | 'low';
 }
 
@@ -40,22 +40,13 @@ export class TodoListComponent implements OnInit {
   addTodo() {
     if (this.newTodo.trim() !== '') {
       if (this.deadlineDate && this.deadlineTime) {
-        const deadlineDateTime = new Date(`${this.deadlineDate} ${this.deadlineTime.hour}:${this.deadlineTime.minute}`);
-        console.log(deadlineDateTime);
         this.obj = {
           message: this.newTodo,
-          deadline: deadlineDateTime,
-          priority: this.selectedPriority
-        };
-      } else {
-        const today = new Date();
-        this.obj = {
-          message: this.newTodo,
-          deadline: today,
+          deadlineD: this.deadlineDate,
+          deadlineT: this.deadlineTime,
           priority: this.selectedPriority
         };
       }
-  
       this.todos.push(this.obj);
       this.newTodo = '';
       this.deadlineDate = '';
@@ -69,9 +60,10 @@ export class TodoListComponent implements OnInit {
   }
 
   markDone(todo: TodoItem) {
-    const doneTime = new Date();
-    this.obj.deadline = doneTime;
     this.inProgress = this.inProgress.filter(item => item!== todo);
+    let date = new Date();
+    todo.deadlineD = date.getDate().toLocaleString();
+    todo.deadlineD = date.getTime().toLocaleString();
     this.done.push(todo);
   }
 
@@ -81,6 +73,7 @@ export class TodoListComponent implements OnInit {
         this.done.splice(index, 1);
     }
   }
+  //used in html to get priority
   getPriorityClass(priority: string): string {
     if (priority === 'high') {
       return 'high-priority';
@@ -89,9 +82,10 @@ export class TodoListComponent implements OnInit {
     } else if (priority === 'low') {
       return 'low-priority';
     }
-    return ''; // Default class
+    return '';
   }
 
+  // to disbale the calender previous date 
   minDateISOString(): string {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -103,17 +97,20 @@ export class TodoListComponent implements OnInit {
 const dummyData: TodoItem[] = [
   {
     message: "Go to gym",
-    deadline: new Date(),
+    deadlineD: "2023-08-18",
+    deadlineT:{ hour: 10, minute: 25 },
     priority: "high"
   },
   {
     message: "Update your task",
-    deadline: new Date(),
+    deadlineD: "2023-08-19",
+    deadlineT:{ hour: 10, minute: 25 },
     priority: "low" 
   },
   {
     message: "Play cricket",
-    deadline: new Date(),
+    deadlineD: "2023-08-20",
+    deadlineT:{ hour: 10, minute: 25 },
     priority: "medium"
   }
 ];
