@@ -62,8 +62,8 @@ export class TodoListComponent implements OnInit {
   markDone(todo: TodoItem) {
     this.inProgress = this.inProgress.filter(item => item!== todo);
     let date = new Date();
-    todo.deadlineD = date.getDate().toLocaleString();
-    todo.deadlineD = date.getTime().toLocaleString();
+    todo.deadlineD = date.toISOString().split('T')[0]
+    todo.deadlineT = {hour: date.getHours(), minute:date.getMinutes()}
     this.done.push(todo);
   }
 
