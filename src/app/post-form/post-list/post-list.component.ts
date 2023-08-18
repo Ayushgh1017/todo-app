@@ -14,6 +14,7 @@ interface IUser {
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
+  selectedPost!: IUser;
   @Input()
   set newPost(post:IUser){
     if(post){
@@ -38,7 +39,7 @@ export class PostListComponent implements OnInit {
   }
 
   loadDetails(post: IUser) {
-    this.selectedUserId = post.userId;
+    this.selectedPost = post;
     this.postSelected.emit(post);
   }
 }
