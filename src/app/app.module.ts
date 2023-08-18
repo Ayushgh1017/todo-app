@@ -4,19 +4,21 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PostsComponent } from './posts/posts.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostFormComponent } from './post-form/post-form.component';
 import { DetailsComponent } from './details/details.component';
 import { CommentsComponent } from './details/comments/comments.component';
+import { PostListComponent } from './post-form/post-list/post-list.component';
+import { PostService } from './post-service.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent,
     PostFormComponent,
     DetailsComponent,
-    CommentsComponent
+    CommentsComponent,
+    PostListComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,7 @@ import { CommentsComponent } from './details/comments/comments.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

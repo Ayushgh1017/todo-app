@@ -1,13 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ApiCallService } from '../api-call.service';
-import { PostService } from '../post-service.service';
-
-export interface IUser {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
+import { IUser } from '../post-service.service';
 
 @Component({
   selector: 'app-post-form',
@@ -17,10 +10,9 @@ export interface IUser {
 export class PostFormComponent {
   postTitle: string = "";
   postDescription: string = "";
+  newPost!: IUser;
 
-  
-
-  constructor(private apiCallService: ApiCallService, private postService: PostService) { }
+  constructor(private apiCallService: ApiCallService) { }
 
   onSubmit() {
     const postData = {
@@ -28,14 +20,13 @@ export class PostFormComponent {
       body: this.postDescription
     };
     this.apiCallService.post('https://jsonplaceholder.typicode.com/posts', postData).subscribe((response: any) => {
-      const newPost: IUser = {
+        this.newPost = {
         userId: response.userId,
         id: response.id,
         title: this.postTitle,
         body: this.postDescription
       };
-      console.log(newPost);
-      this.postService.addPost(newPost);
     });
   }
+  
 }
