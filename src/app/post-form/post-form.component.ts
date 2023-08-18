@@ -18,7 +18,7 @@ export class PostFormComponent {
   postTitle: string = "";
   postDescription: string = "";
 
-  @Output() newPostCreated = new EventEmitter<IUser>();
+  
 
   constructor(private apiCallService: ApiCallService, private postService: PostService) { }
 
@@ -36,7 +36,6 @@ export class PostFormComponent {
       };
       console.log(newPost);
       this.postService.addPost(newPost);
-      this.newPostCreated.emit(newPost);
     });
   }
 }
