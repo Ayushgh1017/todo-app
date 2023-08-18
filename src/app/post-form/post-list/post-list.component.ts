@@ -23,7 +23,7 @@ export class PostListComponent implements OnInit {
   }
 
 
-  @Output() postSelected = new EventEmitter<IUser>();
+  postSelected = new EventEmitter<IUser>();
   selectedUserId: number | null = null;
   posts: IUser[] = [];
   constructor(private postService: PostService) {}
