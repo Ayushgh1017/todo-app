@@ -27,7 +27,7 @@ export class PostCommentsComponent {
   }
 
   fetchComments() {
-    const url = `https://jsonplaceholder.typicode.com/posts/${this.postId}/comments`;
+    const url = `https://jsonplaceholder.typicode.com/posts/${this.userId}/comments`;
     this.http.get<IComment[]>(url).subscribe(comments => {
       if (this.userId) {
         this.comments = comments.filter(comment => comment.postId === this.userId);
