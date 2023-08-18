@@ -11,8 +11,7 @@ import { CommentsComponent } from './details/comments/comments.component';
 import { PostListComponent } from './post-form/post-list/post-list.component';
 import { PostService } from './post-service.service';
 import { PostDetailsComponent } from './post-form/post-details/post-details.component';
-import { PostCommentsComponent } from './post-details/post-comments/post-comments.component';
-
+import { PostCommentsComponent } from './post-form/post-details/post-comments/post-comments.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,7 @@ import { PostCommentsComponent } from './post-details/post-comments/post-comment
     CommentsComponent,
     PostListComponent,
     PostDetailsComponent,
-    PostCommentsComponent,
+    PostCommentsComponent
   ],
   imports: [
     BrowserModule,
