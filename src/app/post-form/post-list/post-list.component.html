@@ -1,6 +1,7 @@
 <div class="post-container">
-    <div class="post-list" *ngFor="let post of posts">
-      <h2 (click)="loadDetails(post)">{{ post.title }}</h2>
-      <button>Edit</button>
-    </div>
-    <app-post-details [selectedPost]="selectedPost"></app-post-details>
+  <div class="post-list" *ngFor="let post of posts">
+    <h2 (click)="loadDetails(post)">{{ post.title }}</h2>
+    <button (click)="editPost(post)">Edit</button>
+  </div>  
+  <app-post-details [selectedPost]="selectedPost"></app-post-details>
+</div>

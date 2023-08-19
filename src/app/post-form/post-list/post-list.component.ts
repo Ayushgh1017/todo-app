@@ -14,18 +14,12 @@ interface IUser {
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  selectedPost!: IUser;
-  @Input()
-  set newPost(post:IUser){
-    if(post){
-      this.posts.push(post);
-    }
-  }
+  @Input() newPost: IUser | null = null;
+  @Output() editSelectedPost = new EventEmitter<IUser>();
 
-
-  postSelected = new EventEmitter<IUser>();
-  selectedUserId: number | null = null;
   posts: IUser[] = [];
+  selectedPost!: IUser | null;
+
   constructor(private postService: PostService) {}
 
   ngOnInit() {
@@ -40,6 +34,9 @@ export class PostListComponent implements OnInit {
 
   loadDetails(post: IUser) {
     this.selectedPost = post;
-    this.postSelected.emit(post);
+  }
+
+  editPost(updatedPost: IUser) {
+    this.editSelectedPost.emit(updatedPost);
   }
 }
