@@ -16,7 +16,7 @@ interface IUser {
 export class PostListComponent implements OnInit {
   @Input() newPost: IUser | null = null;
   @Output() editSelectedPost = new EventEmitter<IUser>();
-
+  
   posts: IUser[] = [];
   selectedPost!: IUser | null;
 
@@ -27,8 +27,11 @@ export class PostListComponent implements OnInit {
   }
 
   getPost() {
-    this.postService.getPosts().subscribe(posts => {
+    this.postService.getPosts().subscribe((posts) => {
       this.posts = posts;
+    });
+    this.postService.newPostCreated.subscribe((post) => {
+      this.posts.push(post);
     });
   }
 
@@ -38,5 +41,14 @@ export class PostListComponent implements OnInit {
 
   editPost(updatedPost: IUser) {
     this.editSelectedPost.emit(updatedPost);
+  }
+  newPostCreated(newPost:IUser){
+    this.posts.push(newPost);
+
+  }
+  deletePost(postToDelete: IUser) {
+
+    this.posts = this.posts.filter(post => post.id !== postToDelete.id);
+
   }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { ApiCallService } from '../api-call.service';
 import { IUser } from '../post-service.service';
+import { PostService } from '../post-service.service';
 
 @Component({
   selector: 'app-post-form',
@@ -15,7 +16,7 @@ export class PostFormComponent {
 
   @Output() submitPost = new EventEmitter<IUser | null>();
 
-  constructor(private apiCallService: ApiCallService) { }
+  constructor(private apiCallService: ApiCallService, private postService:PostService) { }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedPost'] && changes['selectedPost'].currentValue) {
       this.postTitle = changes['selectedPost'].currentValue.title;
@@ -23,32 +24,32 @@ export class PostFormComponent {
     }
   }
   onSubmit() {
-    if (this.selectedPost) {
-      this.selectedPost.title = this.postTitle;
-      this.selectedPost.body = this.postDescription;
-      this.submitPost.emit(this.selectedPost); // Emit edited post
-    } else {
-      const postData = {
+    const postData = {
+      title: this.postTitle,
+      body: this.postDescription
+    };
+    this.apiCallService.post('https://jsonplaceholder.typicode.com/posts', postData).subscribe((response: any) => {
+        this.newPost = {
+        userId: response.userId,
+        id: response.id,
         title: this.postTitle,
         body: this.postDescription
       };
-      this.apiCallService.post('https://jsonplaceholder.typicode.com/posts', postData)
-        .subscribe((response: any) => {
-          this.newPost = {
-            userId: response.userId,
-            id: response.id,
-            title: this.postTitle,
-            body: this.postDescription
-          };
-          this.submitPost.emit(this.newPost);
-        });
-    }
-    this.resetForm();
+      this.submitPost.emit(this.newPost);
+      this.postService.addPost(this.newPost);
+      this.resetForm();
+    });
   }
 
+  edit(){
+    this.selectedPost!.title = this.postTitle;
+    this.selectedPost!.body = this.postDescription;
+    this.submitPost.emit(this.selectedPost);
+  }
   resetForm() {
     this.postTitle = '';
     this.postDescription = '';
     this.selectedPost = null;
   }
+  
 }

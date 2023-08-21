@@ -1,9 +1,10 @@
 <div class="post-container">
   <div class="post-list-container">
-    <div class="post-list" *ngFor="let post of posts.slice(-5)">
+    <div class="post-list" *ngFor="let post of posts">
       <h2 (click)="loadDetails(post)">{{ post.title }}</h2>
       <div class="button-container">
         <button (click)="editPost(post)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deletePost(post)" >Delete</button>
       </div>
     </div>
   </div>
