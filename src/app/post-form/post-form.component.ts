@@ -18,7 +18,6 @@ export class PostFormComponent {
   constructor(private apiCallService: ApiCallService) { }
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedPost'] && changes['selectedPost'].currentValue) {
-      // Populate form fields when selectedPost changes
       this.postTitle = changes['selectedPost'].currentValue.title;
       this.postDescription = changes['selectedPost'].currentValue.body;
     }

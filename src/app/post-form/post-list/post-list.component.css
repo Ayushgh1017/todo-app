@@ -1,36 +1,37 @@
-/* post-container.component.css */
 .post-container {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.details-container {
+  display: flex;
+  justify-content: center;
 }
 
 .post-list h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
   cursor: pointer;
-  display: inline-block;
+  text-decoration: none;
 }
 
 .post-list h2:hover {
   text-decoration: underline;
 }
 
-.post-list button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin-left: 10px;
-  cursor: pointer;
-  
-}
-
-.post-list button:hover {
-  background-color: #0069d9;
-}
